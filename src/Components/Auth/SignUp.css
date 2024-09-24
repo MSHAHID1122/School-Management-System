@@ -1,0 +1,60 @@
+/* src/components/SignUp.css */
+body {
+  background-color: #121212; /* Dark background for the entire page */
+  margin: 0;
+  font-family: Arial, sans-serif; /* Set a default font for better aesthetics */
+}
+.auth-container {
+  max-width: 400px;
+  margin: 100px auto;
+  padding: 20px;
+  background-color: rgb(2, 121, 207); /* White background for the form */
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease;
+}
+
+.auth-container:hover {
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.auth-container h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-family: "Arial", sans-serif; /* Changed font for better aesthetics */
+  color: #333;
+}
+
+.auth-container form {
+  display: flex;
+  flex-direction: column;
+}
+
+.auth-container input {
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  transition: border-color 0.2s;
+}
+
+.auth-container button {
+  padding: 10px;
+  background-color: #28a745; /* Green color for sign-up */
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.2s;
+}
+
+.auth-container button:hover {
+  background-color: #218838; /* Darker green on hover */
+}
+
+.auth-container input:focus {
+  outline: none;
+  border-color: #28a745;
+}
