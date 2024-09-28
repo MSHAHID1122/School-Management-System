@@ -1,52 +1,66 @@
-// src/components/Login.js
 import React, { useState } from "react";
-import "./Login.css"; // Same CSS file
+import "./Login.css";
 import { Link } from "react-router-dom";
 
-const Login = () => {
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
-
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
+function Login() {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Login Data:", formData);
-    // Handle login logic here
+
+    // Use fetch to make a POST request
+    fetch("http://localhost:5000/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json", // Indicate that we're sending JSON data
+      },
+      body: JSON.stringify({
+        username,
+        password,
+      }),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Invalid username or password");
+        }
+        return response.json(); // Parse the JSON response
+      })
+      .then((data) => {
+        alert(data); // Display the login response or success message
+      })
+      .catch((error) => {
+        alert(error.message); // Show the error message if login fails
+      });
   };
 
   return (
-    <div className="auth-container">
+    <form onSubmit={handleSubmit}>
       <h2>Login</h2>
-      <form onSubmit={handleSubmit}>
+      <div>
+        <label>Username: </label>
         <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          value={formData.email}
-          onChange={handleChange}
+          type="text"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          required
         />
+      </div>
+      <div>
+        <label>Password: </label>
         <input
           type="password"
-          name="password"
-          placeholder="Password"
-          value={formData.password}
-          onChange={handleChange}
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
         />
-        <button type="submit">Login</button>
-      </form>
-      <p>
-        <Link to="/signup">Create an Account</Link>
-      </p>
-    </div>
+      </div>
+      <button type="submit">Login</button>
+      <Link to="/signup">
+        <p>Create an account</p>
+      </Link>
+    </form>
   );
-};
+}
 
 export default Login;

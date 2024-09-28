@@ -9,6 +9,7 @@ const SignUp = () => {
     email: "",
     password: "",
   });
+  const [error, setError] = useState(""); // State for error messages
 
   const handleChange = (e) => {
     setFormData({
@@ -20,12 +21,35 @@ const SignUp = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Sign Up Data:", formData);
-    // Handle sign-up logic here
-  };
 
+    fetch("/signup", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          return response.text().then((errorMessage) => {
+            setError(errorMessage); // Set error message to state
+            throw new Error(errorMessage); // Throw an error to be caught below
+          });
+        }
+        console.log("Sign-up successful!");
+        setFormData({ name: "", email: "", password: "" });
+        setError(""); // Clear error if sign-up is successful
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        setError("An unexpected error occurred."); // Generic error message
+      });
+  };
   return (
     <div className="auth-container">
       <h2>Sign Up</h2>
+      {error && <p className="error-message">{error}</p>}{" "}
+      {/* Display error message */}
       <form onSubmit={handleSubmit}>
         <input
           type="text"
@@ -51,7 +75,6 @@ const SignUp = () => {
         <button type="submit">Sign Up</button>
       </form>
       <p>
-        {" "}
         <Link to="/login">Login</Link>
       </p>
     </div>
