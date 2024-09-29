@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import "./Login.css";
-import { Link } from "react-router-dom";
+import "./Login.module.css";
+import { Link, useNavigate } from "react-router-dom";
 
 function Login() {
-  const [username, setUsername] = useState("");
+  const navigate = useNavigate();
+  const [name, setname] = useState("");
   const [password, setPassword] = useState("");
 
   const handleSubmit = (e) => {
@@ -16,18 +17,19 @@ function Login() {
         "Content-Type": "application/json", // Indicate that we're sending JSON data
       },
       body: JSON.stringify({
-        username,
+        name,
         password,
       }),
     })
       .then((response) => {
         if (!response.ok) {
-          throw new Error("Invalid username or password");
+          throw new Error("Invalid name or password");
         }
         return response.json(); // Parse the JSON response
       })
       .then((data) => {
-        alert(data); // Display the login response or success message
+        alert("login successful"); // Display the login response or success message
+        navigate("/");
       })
       .catch((error) => {
         alert(error.message); // Show the error message if login fails
@@ -38,11 +40,11 @@ function Login() {
     <form onSubmit={handleSubmit}>
       <h2>Login</h2>
       <div>
-        <label>Username: </label>
+        <label>name: </label>
         <input
           type="text"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          value={name}
+          onChange={(e) => setname(e.target.value)}
           required
         />
       </div>

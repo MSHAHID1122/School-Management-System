@@ -1,7 +1,7 @@
 // src/components/SignUp.js
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import "./SignUp.css"; // Assuming you're using the same CSS file for both pages
+import "./SignUp.module.css"; // Assuming you're using the same CSS file for both pages
 
 const SignUp = () => {
   const [formData, setFormData] = useState({
@@ -22,7 +22,7 @@ const SignUp = () => {
     e.preventDefault();
     console.log("Sign Up Data:", formData);
 
-    fetch("/signup", {
+    fetch("http://localhost:5000/signup", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -31,6 +31,7 @@ const SignUp = () => {
     })
       .then((response) => {
         if (!response.ok) {
+          console.log(formData);
           return response.text().then((errorMessage) => {
             setError(errorMessage); // Set error message to state
             throw new Error(errorMessage); // Throw an error to be caught below
